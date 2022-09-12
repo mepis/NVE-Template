@@ -18,6 +18,7 @@ router.post("/createPantryItem", async function (req, res) {
     data: {},
     status: "",
     message: "",
+    endpoint: "createPantryItem",
   };
   try {
     const data = req.body;
@@ -39,6 +40,7 @@ router.post("/createRecipe", async function (req, res) {
     data: {},
     status: "",
     message: "",
+    endpoint: "createRecipe",
   };
   try {
     const data = req.body;
@@ -60,6 +62,7 @@ router.post("/createUser", async function (req, res) {
     data: {},
     status: "",
     message: "",
+    endpoint: "createUser",
   };
   try {
     const data = req.body;

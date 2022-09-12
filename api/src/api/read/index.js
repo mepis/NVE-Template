@@ -13,11 +13,12 @@ router.get("/", async function (req, res) {
   return res.status(500).json(response);
 });
 
-router.post("/readAllPantryItem", async function (req, res) {
+router.post("/readPantry", async function (req, res) {
   let response = {
     data: {},
     status: "",
     message: "",
+    endpoint: "readAllPantryItem",
   };
   const user = req.body.data;
   try {
@@ -36,11 +37,12 @@ router.post("/readAllPantryItem", async function (req, res) {
   }
 });
 
-router.post("/readAllRecipes", async function (req, res) {
+router.post("/readRecipes", async function (req, res) {
   let response = {
     data: {},
     status: "",
     message: "",
+    endpoint: "readAllRecipes",
   };
   const user = req.body.data;
   try {
@@ -59,11 +61,12 @@ router.post("/readAllRecipes", async function (req, res) {
   }
 });
 
-router.post("/readAllUsers", async function (req, res) {
+router.post("/readUsers", async function (req, res) {
   let response = {
     data: {},
     status: "",
     message: "",
+    endpoint: "readAllUsers",
   };
   try {
     const users = await User.find().sort({

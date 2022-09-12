@@ -13,11 +13,12 @@ router.get("/", async function (req, res) {
   return res.status(500).json(response);
 });
 
-router.post("/updatePantryItem", async function (req, res) {
+router.post("/updatePantry", async function (req, res) {
   let response = {
     data: {},
     status: "",
     message: "",
+    endpoint: "updatePantry",
   };
   try {
     const payload = req.body.data;
@@ -45,6 +46,7 @@ router.post("/updateRecipe", async function (req, res) {
     data: {},
     status: "",
     message: "",
+    endpoint: "updateRecipe",
   };
   try {
     const payload = req.body.data;
@@ -72,6 +74,7 @@ router.post("/updateUser", async function (req, res) {
     data: {},
     status: "",
     message: "",
+    endpoint: "updateUser",
   };
   try {
     const payload = req.body.data;

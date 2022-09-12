@@ -14,11 +14,12 @@ router.get("/", async function (req, res) {
   return res.status(500).json(response);
 });
 
-router.post("/deletePantryItem", async function (req, res) {
+router.post("/deletePantry", async function (req, res) {
   let response = {
     data: {},
     status: "",
     message: "",
+    endpoint: "deletePantryItem",
   };
   const pantryItem = req.body.data;
   try {
@@ -42,6 +43,7 @@ router.post("/deleteRecipe", async function (req, res) {
     data: {},
     status: "",
     message: "",
+    endpoint: "deleteRecipe",
   };
   const recipe = req.body.data;
   try {
@@ -65,6 +67,7 @@ router.post("/deleteUser", async function (req, res) {
     data: {},
     status: "",
     message: "",
+    endpoint: "deleteUser",
   };
   const user = req.body.data;
   try {
