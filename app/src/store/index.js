@@ -9,8 +9,11 @@ export default createStore({
       _id: "",
       owner: "",
       dateAdded: "",
+      waitingToFinishSyncing: false,
       recipes: [
         {
+          name: "",
+          isActive: false,
           ingredients: {
             ingredient: "",
             volume: 0,
@@ -20,7 +23,7 @@ export default createStore({
           owner: "",
           imgLink: "",
           log: {
-            amountSold: {
+            entry: {
               date: "",
               quantity: 0,
             },
@@ -70,7 +73,10 @@ export default createStore({
     },
     getPantryWaitingToSync(state) {
       return state.pantry.waitingToFinishSyncing;
-    }
+    },
+    getRecipesWaitingToSync(state) {
+      return state.recipes.waitingToFinishSyncing;
+    },
   },
   mutations: {
     setRecipes(state, payload) {
@@ -98,6 +104,9 @@ export default createStore({
     setPantryWaitingToSync(state) {
       state.pantry.waitingToFinishSyncing = !state.pantry.waitingToFinishSyncing;
     },
+    setRecipeWaitingToSync(state) {
+      state.recipes.waitingToFinishSyncing = !state.recipes.waitingToFinishSyncing;
+    },
   },
   actions: {
     async performCRUDOperation({ dispatch }, payload) {
@@ -106,12 +115,13 @@ export default createStore({
       };
       const response = await Axios.post(
         `${apiURL}/${payload.action}/${payload.endpoint}`,
-        payload.data,
+        payload,
         config
       );
       const dataToSync = {
         endpoint: payload.endpoint,
         data: payload.data,
+        user: payload.user,
         responseData: response.data,
       };
       dispatch("syncStore", dataToSync);

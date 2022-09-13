@@ -6,6 +6,7 @@
 </template>
 
 <script>
+// need to sync user on login
 export default {
   name: "homeView",
   components: {},

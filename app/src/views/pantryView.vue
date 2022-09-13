@@ -1,25 +1,34 @@
 <template>
   <div>
     <el-container>
+      <el-row>
+        <el-button type="primary" @click="syncPantry"
+          >Save Chnages</el-button
+        >
+      </el-row>
       <div v-if="pantryItems.length > 0">
         <div v-for="item in pantryItems" :key="item._id">
-          <el-col :span="8">
-            <el-input v-model="item.ingedient" />
-          </el-col>
-          <el-col :span="4">
-            <el-input v-model="item.data.volume" />
-          </el-col>
-          <el-col :span="4">
-            <el-input v-model="item.data.volumeType" />
-          </el-col>
-          <el-col :span="7">
-            <el-input v-model="item.data.purchaseHistory.cost" />
-          </el-col>
-          <el-col :span="1">
-            <el-button type="primary" @click="deletePantryItem(item.ingedient)"
-              >Delete</el-button
-            >
-          </el-col>
+          <el-row>
+            <el-col :span="8">
+              <el-input v-model="item.ingedient" />
+            </el-col>
+            <el-col :span="4">
+              <el-input v-model="item.data.volume" />
+            </el-col>
+            <el-col :span="4">
+              <el-input v-model="item.data.volumeType" />
+            </el-col>
+            <el-col :span="7">
+              <el-input v-model="item.data.purchaseHistory.cost" />
+            </el-col>
+            <el-col :span="1">
+              <el-button
+                type="primary"
+                @click="deletePantryItem(item.ingedient)"
+                >Delete</el-button
+              >
+            </el-col>
+          </el-row>
         </div>
       </div>
       <div v-else>
@@ -79,12 +88,12 @@ export default {
   computed: {
     waitingToFinishSync() {
       return this.$store.getters.getPantryWaitingToSync;
-    }
+    },
   },
   watch: {
     waitingToFinishSync() {
       this.pantryItems = this.$store.getters.getPantry;
-    }
+    },
   },
   methods: {
     deletePantryItem(id) {
@@ -104,6 +113,7 @@ export default {
       const payload = {
         endpoint: "updatePantry",
         action: "update",
+        user: this.$auth0.user,
         data: this.pantryItems,
       };
       this.$store.dispatch("performCRUDOperation", payload);
