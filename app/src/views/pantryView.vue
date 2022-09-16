@@ -2,9 +2,7 @@
   <div>
     <el-container>
       <el-row>
-        <el-button type="primary" @click="syncPantry"
-          >Save Chnages</el-button
-        >
+        <el-button type="primary" @click="syncPantry">Save Chnages</el-button>
       </el-row>
       <div v-if="pantryItems.length > 0">
         <div v-for="item in pantryItems" :key="item._id">

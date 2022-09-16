@@ -2,7 +2,7 @@ import { createStore } from "vuex";
 import Axios from "axios";
 
 const apiURL = `${process.env.VUE_APP_BASE_URL}/api`;
-
+const { isAuthenticated, getAccessTokenSilently } = useAuth0(); //finish add this.getAccessTokenSilently(); to define token for bearer
 export default createStore({
   state: {
     recipes: {
@@ -102,10 +102,12 @@ export default createStore({
       state.user.dateAdded = payload.dateAdded;
     },
     setPantryWaitingToSync(state) {
-      state.pantry.waitingToFinishSyncing = !state.pantry.waitingToFinishSyncing;
+      state.pantry.waitingToFinishSyncing =
+        !state.pantry.waitingToFinishSyncing;
     },
     setRecipeWaitingToSync(state) {
-      state.recipes.waitingToFinishSyncing = !state.recipes.waitingToFinishSyncing;
+      state.recipes.waitingToFinishSyncing =
+        !state.recipes.waitingToFinishSyncing;
     },
   },
   actions: {
