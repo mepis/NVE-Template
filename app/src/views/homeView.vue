@@ -19,6 +19,10 @@ export default {
   created: {},
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    performCrudOperation(payload) {
+      this.$store.dispatch("performCRUDOperation", payload);
+    }
+  },
 };
 </script>

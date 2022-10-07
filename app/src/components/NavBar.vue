@@ -15,18 +15,6 @@
               @click="this.$router.push(`/`)"
               >Dashboard</el-menu-item
             >
-            <el-menu-item
-              index="2"
-              class="noStyle"
-              @click="this.$router.push(`/recipeView`)"
-              >Cookbook</el-menu-item
-            >
-            <el-menu-item
-              index="2"
-              class="noStyle"
-              @click="this.$router.push(`/pantryView`)"
-              >Pantry</el-menu-item
-            >
             <el-menu-item @click="logout" class="noStyle" v-if="isAuthenticated"
               >Log Out</el-menu-item
             >

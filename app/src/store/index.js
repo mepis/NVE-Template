@@ -5,51 +5,7 @@ const apiURL = `${process.env.VUE_APP_BASE_URL}/api`;
 const { isAuthenticated, getAccessTokenSilently } = useAuth0(); //finish add this.getAccessTokenSilently(); to define token for bearer
 export default createStore({
   state: {
-    recipes: {
-      _id: "",
-      owner: "",
-      dateAdded: "",
-      waitingToFinishSyncing: false,
-      recipes: [
-        {
-          name: "",
-          isActive: false,
-          ingredients: {
-            ingredient: "",
-            volume: 0,
-            volumeType: "",
-          },
-          notes: "",
-          owner: "",
-          imgLink: "",
-          log: {
-            entry: {
-              date: "",
-              quantity: 0,
-            },
-          },
-        },
-      ],
-    },
-    pantry: {
-      _id: "",
-      owner: "",
-      dateAdded: "",
-      waitingToFinishSyncing: false,
-      pantry: [
-        {
-          ingedient: "",
-          data: {
-            volume: 0,
-            volumeType: "",
-            purchaseHistory: {
-              cost: 0,
-              purchaseDate: "",
-            },
-          },
-        },
-      ],
-    },
+    WaitingToSync: false,
     user: {
       _id: "",
       nickname: "",
@@ -62,35 +18,14 @@ export default createStore({
     },
   },
   getters: {
-    getRecipes(state) {
-      return state.recipes;
-    },
-    getPantry(state) {
-      return state.pantry;
-    },
     getUser(state) {
       return state.user;
     },
-    getPantryWaitingToSync(state) {
-      return state.pantry.waitingToFinishSyncing;
-    },
-    getRecipesWaitingToSync(state) {
-      return state.recipes.waitingToFinishSyncing;
+    getWaitingToSync(state) {
+      return state.waitingToFinishSyncing;
     },
   },
   mutations: {
-    setRecipes(state, payload) {
-      state.recipes._id = payload._id;
-      state.recipes.owner = payload.owner;
-      state.recipes.dateAdded = payload.dateAdded;
-      state.recipes.recipes = payload.recipes;
-    },
-    setPantry(state, payload) {
-      state.pantry._id = payload._id;
-      state.pantry.owner = payload.owner;
-      state.pantry.dateAdded = payload.dateAdded;
-      state.pantry.pantry = payload.pantry;
-    },
     setuser(state, payload) {
       state.user._id = payload._id;
       state.user.nickname = payload.nickname;
@@ -101,13 +36,12 @@ export default createStore({
       state.user.email_verified = payload.email_verified;
       state.user.dateAdded = payload.dateAdded;
     },
-    setPantryWaitingToSync(state) {
-      state.pantry.waitingToFinishSyncing =
-        !state.pantry.waitingToFinishSyncing;
-    },
-    setRecipeWaitingToSync(state) {
-      state.recipes.waitingToFinishSyncing =
-        !state.recipes.waitingToFinishSyncing;
+    setWaitingToSync(state) {
+      // Used to set a state object to sync
+      // Eg. A new page loads and needs to be notified to load new data
+      // Use watcher in views to watch for this value and update data as needed
+      state.waitingToFinishSyncing =
+        !state.waitingToFinishSyncing;
     },
   },
   actions: {
@@ -135,22 +69,9 @@ export default createStore({
       );
     },
     syncStore({ commit, dispatch }, payload) {
+      // Each crud operation recieves a response payload object that defines endpoint for mutation, 
+      // push message information, etc...  Check API for payload object
       if ((payload.responseData.status = "pass")) {
-        if (
-          payload.endpoint === "createRecipe" ||
-          payload.endpoint === "updateRecipe" ||
-          payload.endpoint === "readRecipes"
-        ) {
-          commit("setRecipes", payload.data);
-        }
-        if (
-          payload.endpoint === "createPantry" ||
-          payload.endpoint === "updatePantry" ||
-          payload.endpoint === "readPantry"
-        ) {
-          commit("setPantry", payload.data);
-          commit("setPantryWaitingToSync");
-        }
         if (
           payload.endpoint === "createUser" ||
           payload.endpoint === "updateUser"
