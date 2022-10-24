@@ -1,6 +1,7 @@
 const express = require("express"); //node module for http services
 const router = express.Router();
 const User = require("../../configs/user");
+const auth = require("../../middleware/auth");
 
 
 router.get("/", async function (req, res) {
@@ -12,7 +13,7 @@ router.get("/", async function (req, res) {
   return res.status(500).json(response);
 });
 
-router.post("/deleteUser", async function (req, res) {
+router.post("/deleteUser", auth, async function (req, res) {
   let response = {
     data: {},
     status: "",
