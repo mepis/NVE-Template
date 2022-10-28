@@ -4,7 +4,6 @@ import router from "./router";
 import store from "./store";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
-import { createAuth0 } from "@auth0/auth0-vue";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 const app = createApp(App);
@@ -14,12 +13,5 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(store);
 app.use(router);
 app.use(ElementPlus);
-app.use(
-  createAuth0({
-    domain: process.env.VUE_APP_DOMAIN,
-    client_id: process.env.VUE_APP_CLIENTID,
-    redirect_uri: window.location.origin,
-    audience: process.env.VUE_APP_AUTH0APIAUDIENCE,
-  })
-);
+
 app.mount("#app");

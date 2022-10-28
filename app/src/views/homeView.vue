@@ -22,7 +22,7 @@ export default {
   methods: {
     performCrudOperation(payload) {
       this.$store.dispatch("performCRUDOperation", payload);
-    }
+    },
   },
 };
 </script>

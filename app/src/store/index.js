@@ -2,11 +2,11 @@ import { createStore } from "vuex";
 import Axios from "axios";
 
 const apiURL = `${process.env.VUE_APP_BASE_URL}/api`;
-const { isAuthenticated, getAccessTokenSilently } = useAuth0(); //finish add this.getAccessTokenSilently(); to define token for bearer
 export default createStore({
   state: {
     WaitingToSync: false,
     user: {
+      token: "",
       _id: "",
       nickname: "",
       name: "",
@@ -14,7 +14,6 @@ export default createStore({
       updated_at: "",
       email: "",
       email_verified: false,
-      auth0PasswordResetURL: process.env.VUE_APP_AUTH0RESETURL,
     },
   },
   getters: {
@@ -23,6 +22,9 @@ export default createStore({
     },
     getWaitingToSync(state) {
       return state.waitingToFinishSyncing;
+    },
+    getUserToken(state) {
+      return state.user.token;
     },
   },
   mutations: {
@@ -40,14 +42,13 @@ export default createStore({
       // Used to set a state object to sync
       // Eg. A new page loads and needs to be notified to load new data
       // Use watcher in views to watch for this value and update data as needed
-      state.waitingToFinishSyncing =
-        !state.waitingToFinishSyncing;
+      state.waitingToFinishSyncing = !state.waitingToFinishSyncing;
     },
   },
   actions: {
     async performCRUDOperation({ dispatch }, payload) {
       const config = {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${this.$store.state.user.token}` },
       };
       const response = await Axios.post(
         `${apiURL}/${payload.action}/${payload.endpoint}`,
@@ -69,9 +70,9 @@ export default createStore({
       );
     },
     syncStore({ commit, dispatch }, payload) {
-      // Each crud operation recieves a response payload object that defines endpoint for mutation, 
+      // Each crud operation recieves a response payload object that defines endpoint for mutation,
       // push message information, etc...  Check API for payload object
-      if ((payload.responseData.status = "pass")) {
+      if (payload.responseData.status === "pass") {
         if (
           payload.endpoint === "createUser" ||
           payload.endpoint === "updateUser"
