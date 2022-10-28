@@ -2,6 +2,7 @@ const express = require("express"); //node module for http services
 const router = express.Router();
 const User = require("../../configs/user");
 const auth = require("../../middleware/auth");
+const tokens = require("../../utils/token");
 
 router.get("/", async function (req, res) {
   let response = {
@@ -55,13 +56,8 @@ app.post("/createUser", async (req, res) => {
     });
 
     // Create token
-    const token = jwt.sign(
-      { user_id: user._id, email },
-      process.env.TOKEN_KEY,
-      {
-        expiresIn: "2h",
-      }
-    );
+    const token = await tokens.createToken(user._id, email);
+
     // save user token
     user.token = token;
 

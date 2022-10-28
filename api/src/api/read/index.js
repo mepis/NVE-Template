@@ -27,7 +27,7 @@ app.post("/login", async (req, res) => {
 
     // Validate user input
     if (!(email && password)) {
-      response.data = { error: "Both the email address and password are required" };
+      response.data = { error: "Both an email address and password are required to login." };
       response.status = "fail";
       response.message = "Failed";
       return res.status(400).send(response);

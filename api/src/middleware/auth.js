@@ -2,13 +2,15 @@ const jwt = require("jsonwebtoken");
 const config = process.env;
 const redisClient = require("../../configs/redisConfig.js");
 
-const verifyToken = (req, res, next) => {
+const verifyToken = async (req, res, next) => {
     let response = {
         data: {},
         status: "",
         message: "",
         endpoint: "auth",
     };
+    const userEmail = req.body.email;
+    const redisClient = await redisClient.get(userEmail);
     const token =
         req.body.token || req.query.token || req.headers["x-access-token"];
 
