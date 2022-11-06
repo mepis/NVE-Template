@@ -4,6 +4,7 @@ import Axios from "axios";
 const apiURL = `${process.env.VUE_APP_BASE_URL}/api`;
 export default createStore({
   state: {
+    debug: true,
     WaitingToSync: false,
     user: {
       token: "",
@@ -25,6 +26,9 @@ export default createStore({
     },
     getUserToken(state) {
       return state.user.token;
+    },
+    getDebug(state) {
+      return state.debug;
     },
   },
   mutations: {

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const config = process.env;
-const redisClient = require("../../configs/redisConfig.js");
+const redisClient = require("./../configs/redisConfig.js");
 
 const verifyToken = async (req, res, next) => {
     let response = {

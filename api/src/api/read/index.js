@@ -12,7 +12,7 @@ router.get("/", async function (req, res) {
   return res.status(500).json(response);
 });
 
-app.post("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   let response = {
     data: {},
     status: "",

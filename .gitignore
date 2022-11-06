@@ -1,5 +1,5 @@
   UW PICO 5.09                                                                                 File: .gitignore                                                                                   
-
+yarn.lock
 .env
 node_modules/
 

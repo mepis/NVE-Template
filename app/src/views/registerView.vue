@@ -60,7 +60,10 @@ export default {
       this.performCrudOperation(payload);
     },
     performCrudOperation(payload) {
-      this.$store.dispatch("performCRUDOperation", payload);
+      if (this.$store.getters.getDebug) {
+        console.log("payload: ", payload);
+      }
+      // this.$store.dispatch("performCRUDOperation", payload);
     },
   },
 };

@@ -1,5 +1,5 @@
 let jwt = require("jsonwebtoken");
-const redisClient = require("../../configs/redisConfig.js");
+const redisClient = require("./../configs/redisConfig.js");
 
 // update below with adding token to reddis
 

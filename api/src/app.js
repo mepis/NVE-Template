@@ -6,7 +6,7 @@ const create = require("./api/create/index.js");
 const update = require("./api/update/index.js");
 const read = require("./api/read/index.js");
 const del = require("./api/delete/index.js");
-const corsOptions = require("./middleware/CORS_WHITELIST");
+const corsOptions = require("./middleware/cors.js");
 
 const app = express();
 const port = process.env.PORT || 3001; // looks for enviroment variable for port, if one does not exist, use port 3000 instead, fot listening to HTTP ports

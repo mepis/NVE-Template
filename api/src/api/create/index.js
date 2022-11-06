@@ -13,7 +13,7 @@ router.get("/", async function (req, res) {
   return res.status(500).json(response);
 });
 
-app.post("/createUser", async (req, res) => {
+router.post("/createUser", async (req, res) => {
   let response = {
     data: {},
     status: "",
