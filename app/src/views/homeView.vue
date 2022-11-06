@@ -16,7 +16,7 @@ export default {
     };
   },
   mounted() {},
-  created: {},
+  // created: {},
   computed: {},
   watch: {},
   methods: {
@@ -26,3 +26,5 @@ export default {
   },
 };
 </script>
+
+<style></style>

@@ -23,16 +23,14 @@ export default {
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
+.card {
+  width: 400px;
+  margin: 20px;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

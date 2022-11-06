@@ -1,34 +1,37 @@
 <template>
-  <div>
-    <el-form :model="loginForm" label-width="120px">
-      <el-form-item label="Password" prop="pass">
-        <el-input
-          v-model="loginForm.password"
-          type="password"
-          autocomplete="off"
-        />
+  <el-container>
+    <el-card shadow="hover" class="card">
+      <template #header>
+        <div class="card-header">
+          <span>Login</span>
+          <el-button type="primary">Go</el-button>
+        </div>
+      </template>
+      <el-form-item label="Email">
+        <el-input v-model="email" />
       </el-form-item>
-    </el-form>
-  </div>
+      <el-form-item label="Password">
+        <el-input v-model="password" type="password" autocomplete="off" />
+      </el-form-item>
+    </el-card>
+  </el-container>
 </template>
 
 <script>
 // need to sync user on login
 export default {
-  name: "homeView",
+  name: "loginView",
   components: {},
   data() {
     return {
       placeholder: false,
-      loginForm: {
-        password: "",
-        email: "",
-      },
+      password: "",
+      email: "",
     };
   },
   mounted() {},
-  created: {},
-  computed: {},
+  // created: {},
+  // computed: {},
   watch: {},
   methods: {
     performCrudOperation(payload) {
@@ -37,3 +40,5 @@ export default {
   },
 };
 </script>
+
+<style></style>

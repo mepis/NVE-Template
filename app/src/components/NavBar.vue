@@ -15,11 +15,20 @@
               @click="this.$router.push(`/`)"
               >Dashboard</el-menu-item
             >
-            <el-menu-item @click="logout" class="noStyle" v-if="isAuthenticated"
+            <el-menu-item index="3" @click="logout" class="noStyle"
               >Log Out</el-menu-item
             >
-            <el-menu-item @click="login" class="noStyle" v-else
+            <el-menu-item
+              index="4"
+              @click="this.$router.push(`/login`)"
+              class="noStyle"
               >Log In</el-menu-item
+            >
+            <el-menu-item
+              index="5"
+              @click="this.$router.push(`/register`)"
+              class="noStyle"
+              >Register</el-menu-item
             >
           </el-menu>
         </nav></el-header
@@ -29,32 +38,45 @@
 </template>
 
 <script>
-import { useAuth0 } from "@auth0/auth0-vue";
-
 export default {
   name: "NavBar",
   components: {},
   data() {
     return {};
   },
-  setup() {
-    const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
-    return {
-      login: () => {
-        loginWithRedirect();
-      },
-      logout: () => {
-        logout({ returnTo: window.location.origin });
-      },
-      isAuthenticated,
-    };
-  },
+  setup() {},
   mounted() {},
   created() {},
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    logout() {
+      console.log("test");
+      const payload = {
+        token: "",
+        _id: "",
+        nickname: "",
+        name: "",
+        picture: "",
+        updated_at: "",
+        email: "",
+        email_verified: "",
+        dateAdded: "",
+      };
+      this.$store.commit("setuser", payload);
+      this.$router.push(`/`);
+    },
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
+}
+</style>

@@ -22,8 +22,12 @@ app.post("/createUser", async (req, res) => {
   };
 
   try {
-    // Get user input
-    const { firstName, lastName, email, password } = req.body;
+    const firstName = req.body.data.firstName;
+    const lastName = req.body.data.lastName;
+    const email = req.body.data.email;
+    const password = req.body.data.password;
+
+    console.log("req: ", req.body);
 
     // Validate user input
     if (!(email && password && firstName && lastName)) {
@@ -34,7 +38,6 @@ app.post("/createUser", async (req, res) => {
     }
 
     // check if user already exist
-    // Validate if user exist in our database
     const doesUserExist = await User.findOne({ email });
 
     if (doesUserExist) {

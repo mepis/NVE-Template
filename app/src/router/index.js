@@ -7,6 +7,18 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "projects" */ "../views/homeView.vue"),
   },
+  {
+    path: "/login",
+    name: "loginView",
+    component: () =>
+      import(/* webpackChunkName: "projects" */ "../views/loginView.vue"),
+  },
+  {
+    path: "/register",
+    name: "registerView",
+    component: () =>
+      import(/* webpackChunkName: "projects" */ "../views/registerView.vue"),
+  },
 ];
 
 const router = createRouter({
