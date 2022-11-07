@@ -9,12 +9,19 @@
             mode="horizontal"
             :ellipsis="false"
           >
-            <el-menu-item
-              index="2"
-              class="noStyle"
-              @click="this.$router.push(`/`)"
-              >Dashboard</el-menu-item
+            <el-menu-item index="0"
+              >Hi {{ this.$store.state.user.userName }}!</el-menu-item
             >
+            <div class="flex-grow" />
+            <el-menu-item index="0">
+              <el-image
+                style="width: 100px; height: 100px"
+                :src="this.$store.state.config.appLogo"
+                :fit="fit"
+              />
+              {{ this.$store.state.config.appName }}</el-menu-item
+            >
+            <div class="flex-grow" />
             <el-menu-item index="3" @click="logout" class="noStyle"
               >Log Out</el-menu-item
             >
@@ -71,6 +78,10 @@ export default {
 </script>
 
 <style scoped>
+.flex-grow {
+  flex-grow: 1;
+}
+
 nav a {
   font-weight: bold;
   color: #2c3e50;

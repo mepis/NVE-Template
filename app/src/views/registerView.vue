@@ -4,11 +4,12 @@
       <template #header>
         <div class="card-header">
           <span>Register</span>
+          <el-button type="primary" @click="resetRegisterForm">Reset</el-button>
           <el-button type="primary" @click="register">Go</el-button>
         </div>
       </template>
-      <el-form-item label="Nickname">
-        <el-input v-model="nickname" />
+      <el-form-item label="Username">
+        <el-input v-model="userName" />
       </el-form-item>
       <el-form-item label="First Name">
         <el-input v-model="firstName" />
@@ -20,7 +21,7 @@
         <el-input v-model="email" />
       </el-form-item>
       <el-form-item label="Password">
-        <el-input v-model="password" autocomplete="off" />
+        <el-input v-model="password" type="password" autocomplete="off" />
       </el-form-item>
     </el-card>
   </el-container>
@@ -37,7 +38,7 @@ export default {
       email: "",
       firstName: "",
       lastName: "",
-      nickname: "",
+      userName: "",
     };
   },
   mounted() {},
@@ -52,18 +53,26 @@ export default {
         data: {
           password: this.password,
           email: this.email,
-          nickname: this.nickname,
+          userName: this.userName,
           firstName: this.firstName,
           lastName: this.lastName,
         },
       };
       this.performCrudOperation(payload);
     },
+    resetRegisterForm() {
+      this.password = "";
+      this.email = "";
+      this.firstName = "";
+      this.lastName = "";
+      this.userName = "";
+    },
     performCrudOperation(payload) {
       if (this.$store.getters.getDebug) {
         console.log("payload: ", payload);
       }
-      // this.$store.dispatch("performCRUDOperation", payload);
+      this.$store.dispatch("performCRUDOperation", payload);
+      this.resetRegisterForm();
     },
   },
 };

@@ -3,7 +3,7 @@ const redisClient = require("./../configs/redisConfig.js");
 
 // update below with adding token to reddis
 
-async function createToken(id, email) {
+exports.createToken = function (id, email) {
   return new Promise(async (resolve, reject) => {
     // Create token
     const token = jwt.sign(
@@ -19,6 +19,4 @@ async function createToken(id, email) {
     await redisClient.set(email, token);
     resolve(token);
   });
-}
-
-module.exports = createToken;
+};

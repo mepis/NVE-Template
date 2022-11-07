@@ -4,17 +4,22 @@ import Axios from "axios";
 const apiURL = `${process.env.VUE_APP_BASE_URL}/api`;
 export default createStore({
   state: {
-    debug: true,
+    config: {
+      debug: true,
+      appName: "Default Name",
+      appLogo: "#",
+    },
     WaitingToSync: false,
     user: {
       token: "",
       _id: "",
-      nickname: "",
-      name: "",
+      userName: "",
+      dateAdded: "",
+      firstName: "",
+      lastName: "",
       picture: "",
-      updated_at: "",
       email: "",
-      email_verified: false,
+      emailVerified: false,
     },
   },
   getters: {
@@ -28,19 +33,18 @@ export default createStore({
       return state.user.token;
     },
     getDebug(state) {
-      return state.debug;
+      return state.config.debug;
     },
   },
   mutations: {
     setuser(state, payload) {
-      state.user._id = payload._id;
-      state.user.nickname = payload.nickname;
-      state.user.name = payload.name;
-      state.user.picture = payload.picture;
-      state.user.updated_at = payload.updated_at;
-      state.user.email = payload.email;
-      state.user.email_verified = payload.email_verified;
-      state.user.dateAdded = payload.dateAdded;
+      state.user._id = payload.data.user._id;
+      state.user.userName = payload.data.user.userName;
+      state.user.firstName = payload.data.user.firstName;
+      state.user.lastName = payload.data.user.lastName;
+      state.user.email = payload.data.user.email;
+      state.user.emailVerified = payload.data.user.emailVerified;
+      state.user.dateAdded = payload.data.user.dateAdded;
     },
     setWaitingToSync(state) {
       // Used to set a state object to sync
@@ -50,15 +54,21 @@ export default createStore({
     },
   },
   actions: {
-    async performCRUDOperation({ dispatch }, payload) {
+    async performCRUDOperation({ dispatch, getters, state }, payload) {
+      if (getters.getDebug) {
+        console.log("performCRUDOperation.payload: ", payload);
+      }
       const config = {
-        headers: { Authorization: `Bearer ${this.$store.state.user.token}` },
+        headers: { Authorization: `Bearer ${state.user.token}` },
       };
       const response = await Axios.post(
         `${apiURL}/${payload.action}/${payload.endpoint}`,
         payload,
         config
       );
+      if (getters.getDebug) {
+        console.log("performCRUDOperation.response: ", response);
+      }
       const dataToSync = {
         endpoint: payload.endpoint,
         data: payload.data,
@@ -67,21 +77,27 @@ export default createStore({
       };
       dispatch("syncStore", dataToSync);
     },
-    pushNotification(payload) {
+    pushNotification({ getters }, payload) {
+      if (getters.getDebug) {
+        console.log("pushNotification.payload: ", payload);
+      }
       //to do: push toast to dom
       console.log(
-        `${payload.data.data.endpoint} ${payload.data.status}: ${payload.data.data.message}`
+        `endpoint: ${payload.endpoint} | status: ${payload.status} | message: ${payload.message}`
       );
     },
-    syncStore({ commit, dispatch }, payload) {
+    syncStore({ commit, dispatch, getters }, payload) {
       // Each crud operation recieves a response payload object that defines endpoint for mutation,
       // push message information, etc...  Check API for payload object
+      if (getters.getDebug) {
+        console.log("syncStore.payload: ", payload);
+      }
       if (payload.responseData.status === "pass") {
         if (
           payload.endpoint === "createUser" ||
           payload.endpoint === "updateUser"
         ) {
-          commit("updateUser", payload.data);
+          commit("setuser", payload.responseData);
         }
       }
       dispatch("pushNotification", payload.responseData);

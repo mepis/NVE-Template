@@ -1,13 +1,13 @@
 const mongoose = require("../configs/dbConfig.js");
 
 const user = new mongoose.Schema({
-  nickname: String,
+  userName: String,
   firstName: String,
   lastName: String,
-  picture: String,
   lastUpdated: String,
+  password: String,
   email: { type: String, unique: true },
-  email_verified: false,
+  emailVerified: false,
   dateAdded: {type: Date, default: Date.now},
 });
 
