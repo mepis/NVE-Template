@@ -48,7 +48,7 @@ export default {
   methods: {
     register() {
       const payload = {
-        action: "create",
+        action: "user",
         endpoint: "createUser",
         data: {
           password: this.password,
