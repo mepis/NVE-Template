@@ -125,15 +125,18 @@ router.post("/login", async (req, res) => {
     message: "",
     endpoint: "login",
   };
-
+  console.log("body: ", req.body);
   // Our login logic starts here
   try {
     // Get user input
-    const { email, password } = req.body;
+    const email = req.body.data.email;
+    const password = req.body.data.password;
 
     // Validate user input
     if (!(email && password)) {
-      response.data = { error: "Both an email address and password are required to login." };
+      response.data = {
+        error: "Both an email address and password are required to login.",
+      };
       response.status = "fail";
       response.message = "Failed";
       return res.status(400).send(response);
@@ -157,12 +160,11 @@ router.post("/login", async (req, res) => {
       // user
       response.data = {
         message: "You are now logged in",
-        userToken: token
+        userToken: token,
       };
       response.status = "pass";
       response.message = "Success";
       return res.status(200).send(response);
-      res.status(200).json(user);
     } else {
       response.data = { error: "Email and/or password are not correct" };
       response.status = "fail";

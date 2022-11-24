@@ -6,20 +6,21 @@ export default createStore({
   state: {
     config: {
       debug: true,
-      appName: "Default Name",
+      appName: "Appy App",
       appLogo: "#",
     },
     WaitingToSync: false,
     user: {
       token: "",
       _id: "",
-      userName: "",
+      userName: "Random User",
       dateAdded: "",
       firstName: "",
       lastName: "",
       picture: "",
       email: "",
       emailVerified: false,
+      isLoggedIn: false,
     },
   },
   getters: {
@@ -45,6 +46,7 @@ export default createStore({
       state.user.email = payload.data.user.email;
       state.user.emailVerified = payload.data.user.emailVerified;
       state.user.dateAdded = payload.data.user.dateAdded;
+      state.user.isLoggedIn = payload.data.user.isLoggedIn;
     },
     setWaitingToSync(state) {
       // Used to set a state object to sync
@@ -61,21 +63,56 @@ export default createStore({
       const config = {
         headers: { Authorization: `Bearer ${state.user.token}` },
       };
-      const response = await Axios.post(
-        `${apiURL}/${payload.action}/${payload.endpoint}`,
-        payload,
-        config
-      );
-      if (getters.getDebug) {
-        console.log("performCRUDOperation.response: ", response);
+      try {
+        const response = await Axios.post(
+          `${apiURL}/${payload.action}/${payload.endpoint}`,
+          payload,
+          config
+        );
+        if (getters.getDebug) {
+          console.log("performCRUDOperation.response: ", response);
+        }
+        const dataToSync = {
+          endpoint: payload.endpoint,
+          data: payload.data,
+          user: payload.user,
+          responseData: response.data,
+        };
+        dispatch("syncStore", dataToSync);
+      } catch (error) {
+        const errorData = {
+          fileName: "app/src/store/index.js",
+          methodName: "performCRUDOperation",
+          errorMessage: error,
+        };
+        dispatch("logError", errorData);
       }
-      const dataToSync = {
-        endpoint: payload.endpoint,
-        data: payload.data,
-        user: payload.user,
-        responseData: response.data,
+    },
+    logError({ getters, state }, errorData) {
+      // to do, implement logging system
+      const config = {
+        headers: { Authorization: `Bearer ${state.user.token}` },
       };
-      dispatch("syncStore", dataToSync);
+      const payload = {
+        action: "logging",
+        endpoint: "addLog",
+        data: {
+          logData: errorData,
+        },
+      };
+      if (getters.getDebug) {
+        console.log("errorData: ", errorData);
+        console.log("payload: ", payload);
+      }
+      try {
+        Axios.post(
+          `${apiURL}/${payload.action}/${payload.endpoint}`,
+          payload,
+          config
+        );
+      } catch (error) {
+        console.log("Error: ", error);
+      }
     },
     pushNotification({ getters }, payload) {
       if (getters.getDebug) {
@@ -97,6 +134,7 @@ export default createStore({
           payload.endpoint === "createUser" ||
           payload.endpoint === "updateUser"
         ) {
+          payload.responseData.data.user.isLoggedIn = true;
           commit("setuser", payload.responseData);
         }
       }

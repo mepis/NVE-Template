@@ -22,10 +22,15 @@
               {{ this.$store.state.config.appName }}</el-menu-item
             >
             <div class="flex-grow" />
-            <el-menu-item index="3" @click="logout" class="noStyle"
+            <el-menu-item
+              v-if="this.$store.state.user.isLoggedIn"
+              index="3"
+              @click="logout"
+              class="noStyle"
               >Log Out</el-menu-item
             >
             <el-menu-item
+              v-else
               index="4"
               @click="this.$router.push(`/login`)"
               class="noStyle"
@@ -36,6 +41,12 @@
               @click="this.$router.push(`/register`)"
               class="noStyle"
               >Register</el-menu-item
+            >
+            <el-menu-item
+              index="6"
+              @click="this.$router.push(`/debug`)"
+              class="noStyle"
+              >Debug</el-menu-item
             >
           </el-menu>
         </nav></el-header
@@ -60,15 +71,20 @@ export default {
     logout() {
       console.log("test");
       const payload = {
-        token: "",
-        _id: "",
-        nickname: "",
-        name: "",
-        picture: "",
-        updated_at: "",
-        email: "",
-        email_verified: "",
-        dateAdded: "",
+        data: {
+          user: {
+            token: "",
+            _id: "",
+            nickname: "",
+            name: "Random Person",
+            picture: "",
+            updated_at: "",
+            email: "",
+            email_verified: "",
+            dateAdded: "",
+            isLoggedIn: false,
+          },
+        },
       };
       this.$store.commit("setuser", payload);
       this.$router.push(`/`);

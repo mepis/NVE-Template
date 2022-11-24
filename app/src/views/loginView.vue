@@ -4,7 +4,8 @@
       <template #header>
         <div class="card-header">
           <span>Login</span>
-          <el-button type="primary">Go</el-button>
+          <el-button type="primary" @click="resetRegisterForm">Reset</el-button>
+          <el-button type="primary" @click="login">Go</el-button>
         </div>
       </template>
       <el-form-item label="Email">
@@ -24,7 +25,6 @@ export default {
   components: {},
   data() {
     return {
-      placeholder: false,
       password: "",
       email: "",
     };
@@ -34,6 +34,21 @@ export default {
   // computed: {},
   watch: {},
   methods: {
+    login() {
+      const payload = {
+        action: "user",
+        endpoint: "login",
+        data: {
+          password: this.password,
+          email: this.email,
+        },
+      };
+      this.performCrudOperation(payload);
+    },
+    resetRegisterForm() {
+      this.password = "";
+      this.email = "";
+    },
     performCrudOperation(payload) {
       this.$store.dispatch("performCRUDOperation", payload);
     },
