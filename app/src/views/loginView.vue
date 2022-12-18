@@ -3,15 +3,19 @@
     <el-card shadow="hover" class="card">
       <template #header>
         <div class="card-header">
-          <span>Login</span>
-          <el-button type="primary" @click="resetRegisterForm">Reset</el-button>
-          <el-button type="primary" @click="login">Go</el-button>
+          <span>{{ this.language.login }}</span>
+          <el-button type="primary" @click="resetRegisterForm">{{
+            this.language.reset
+          }}</el-button>
+          <el-button type="primary" @click="login">{{
+            this.language.go
+          }}</el-button>
         </div>
       </template>
-      <el-form-item label="Email">
+      <el-form-item :label="this.language.email">
         <el-input v-model="email" />
       </el-form-item>
-      <el-form-item label="Password">
+      <el-form-item :label="this.language.password">
         <el-input v-model="password" type="password" autocomplete="off" />
       </el-form-item>
     </el-card>
@@ -31,7 +35,11 @@ export default {
   },
   mounted() {},
   // created: {},
-  // computed: {},
+  computed: {
+    language() {
+      return this.$store.state.config.language.loginView;
+    },
+  },
   watch: {},
   methods: {
     login() {
@@ -45,12 +53,19 @@ export default {
       };
       this.performCrudOperation(payload);
     },
-    resetRegisterForm() {
+    resetLoginForm() {
       this.password = "";
       this.email = "";
     },
     performCrudOperation(payload) {
-      this.$store.dispatch("performCRUDOperation", payload);
+      if (this.$store.getters.getDebug) {
+        console.log("payload: ", payload);
+      }
+      let shouldRoute = this.$store.dispatch("performCRUDOperation", payload);
+      if (shouldRoute) {
+        this.$router.push(`/`);
+      }
+      this.resetLoginForm();
     },
   },
 };

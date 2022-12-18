@@ -1,0 +1,66 @@
+exports.languageText = [
+  {
+    id: "en",
+    language: "English",
+    views: {
+      registerView: {
+        userName: "UserName",
+        firstName: "First Name",
+        lastName: "Last Name",
+        email: "Email Address",
+        password: "Password",
+        reset: "Reset",
+        go: "Go",
+        register: "Register",
+      },
+      loginView: {
+        login: "Login",
+        email: "Email",
+        password: "Password",
+        reset: "Reset",
+        go: "Go",
+      },
+      navBar: {
+        hi: "Hello",
+        home: "Home",
+        login: "Login",
+        logout: "Log Out",
+        register: "Register",
+        debug: "Debug",
+        account: "Account",
+      },
+    },
+  },
+  {
+    id: "es",
+    language: "Spanish",
+    views: {
+      registerView: {
+        userName: "Nombre de usuario",
+        firstName: "Primer nombre",
+        lastName: "Apellido",
+        email: "Dirección de correo electrónico",
+        password: "Clave",
+        reset: "Reiniciar",
+        go: "Ir",
+        register: "Registro",
+      },
+      loginView: {
+        login: "Acceso",
+        email: "Dirección de correo electrónico",
+        password: "Clave",
+        reset: "Reiniciar",
+        go: "Ir",
+      },
+      navBar: {
+        hi: "Hola",
+        home: "Casa",
+        login: "Acceso",
+        logout: "Cerrar sesión",
+        register: "Registro",
+        debug: "Depurar",
+        account: "Cuenta",
+      },
+    },
+  },
+];

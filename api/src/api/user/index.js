@@ -4,6 +4,7 @@ const User = require("../../configs/user");
 const auth = require("../../middleware/auth");
 const tokens = require("../../utils/token");
 const bcrypt = require("bcrypt");
+let jwt = require("jsonwebtoken");
 
 router.get("/", async function (req, res) {
   let response = {
@@ -160,18 +161,24 @@ router.post("/login", async (req, res) => {
       // user
       response.data = {
         message: "You are now logged in",
-        userToken: token,
+        user: user,
       };
       response.status = "pass";
       response.message = "Success";
       return res.status(200).send(response);
     } else {
+      if (process.env.DEBUG) {
+        console.log(" Error: Email and/or password are not correct ");
+      }
       response.data = { error: "Email and/or password are not correct" };
       response.status = "fail";
       response.message = "Failed";
       return res.status(400).send(response);
     }
   } catch (err) {
+    if (process.env.DEBUG) {
+      console.log(" Error: /login endpoint error: ", err);
+    }
     response.data = { error: err };
     response.status = "fail";
     response.message = "Failed";

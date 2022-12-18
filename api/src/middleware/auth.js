@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const config = process.env;
-const redisClient = require("./../configs/redisConfig.js");
 
 const verifyToken = async (req, res, next) => {
   let response = {
@@ -9,8 +8,6 @@ const verifyToken = async (req, res, next) => {
     message: "",
     endpoint: "auth",
   };
-  const userEmail = req.body.email;
-  const redisClient = await redisClient.get(userEmail); // <- this is causing an issue, don't know what I named it that, and I'm not referencing the actual stored token anywhere
   const token =
     req.body.token || req.query.token || req.headers["x-access-token"];
 
@@ -22,6 +19,7 @@ const verifyToken = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, config.TOKEN_KEY);
+    console.log("Decoded: ", decoded);
     req.user.didAuthenticate = decoded;
   } catch (err) {
     response.data = { error: "Invalid token" };

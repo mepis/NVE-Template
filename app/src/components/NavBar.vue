@@ -10,7 +10,8 @@
             :ellipsis="false"
           >
             <el-menu-item index="0"
-              >Hi {{ this.$store.state.user.userName }}!</el-menu-item
+              >{{ this.language.hi }}
+              {{ this.$store.state.user.userName }}!</el-menu-item
             >
             <div class="flex-grow" />
             <el-menu-item index="0">
@@ -23,30 +24,44 @@
             >
             <div class="flex-grow" />
             <el-menu-item
+              index="2"
+              @click="this.$router.push(`/`)"
+              class="noStyle"
+              >{{ this.language.home }}</el-menu-item
+            >
+            <el-menu-item
               v-if="this.$store.state.user.isLoggedIn"
               index="3"
               @click="logout"
               class="noStyle"
-              >Log Out</el-menu-item
+              >{{ this.language.logout }}</el-menu-item
             >
             <el-menu-item
               v-else
               index="4"
               @click="this.$router.push(`/login`)"
               class="noStyle"
-              >Log In</el-menu-item
+              >{{ this.language.login }}</el-menu-item
             >
             <el-menu-item
+              v-if="!this.$store.state.user.isLoggedIn"
               index="5"
               @click="this.$router.push(`/register`)"
               class="noStyle"
-              >Register</el-menu-item
+              >{{ this.language.register }}</el-menu-item
             >
             <el-menu-item
+              v-if="!this.$store.state.config.debug"
               index="6"
               @click="this.$router.push(`/debug`)"
               class="noStyle"
-              >Debug</el-menu-item
+              >{{ this.language.debug }}</el-menu-item
+            >
+            <el-menu-item
+              index="7"
+              @click="this.$router.push(`/account`)"
+              class="noStyle"
+              >{{ this.language.account }}</el-menu-item
             >
           </el-menu>
         </nav></el-header
@@ -65,7 +80,11 @@ export default {
   setup() {},
   mounted() {},
   created() {},
-  computed: {},
+  computed: {
+    language() {
+      return this.$store.state.config.language.navBar;
+    },
+  },
   watch: {},
   methods: {
     logout() {

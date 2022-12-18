@@ -2,6 +2,12 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
+    path: "/account",
+    name: "accountView",
+    component: () =>
+      import(/* webpackChunkName: "projects" */ "../views/accountView.vue"),
+  },
+  {
     path: "/debug",
     name: "debugView",
     component: () =>
