@@ -1,5 +1,5 @@
 <template>
-  <div id="navBab">
+  <div id="navBar">
     <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
       <div class="flex items-center flex-shrink-0 text-white mr-6">
         <a
@@ -8,54 +8,51 @@
         >
           {{ this.$store.state.config.appName }}</a
         >
+        <span class="text-white mr-6 pl-6">
+          {{ this.language.hi }}
+          {{ this.$store.state.user.userName }}!
+        </span>
       </div>
-      <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-        <div class="text-sm lg:flex-grow">
-          <a
-            v-if="this.$store.state.user.isLoggedIn"
-            @click="logout"
-            href="#"
-            class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
-          >
-            {{ this.language.logout }}
-          </a>
-          <a
-            v-else
-            @click="this.$router.push(`/login`)"
-            href="#"
-            class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
-          >
-            {{ this.language.login }}
-          </a>
-          <a
-            v-if="!this.$store.state.user.isLoggedIn"
-            @click="this.$router.push(`/register`)"
-            href="#"
-            class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
-          >
-            {{ this.language.register }}
-          </a>
-          <a
-            v-if="this.$store.state.config.debug"
-            @click="this.$router.push(`/debug`)"
-            href="#"
-            class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
-          >
-            {{ this.language.debug }}
-          </a>
-        </div>
-        <div>
-          <span class="text-white mr-6">
-            {{ this.language.hi }}
-            {{ this.$store.state.user.userName }}!
-          </span>
-          <a
-            @click="this.$router.push(`/account`)"
-            href="#"
-            class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-white mt-4 lg:mt-0"
-            >{{ this.language.account }}</a
-          >
-        </div>
+      <div class="grow text-sm flex justify-end">
+        <a
+          v-if="this.$store.state.user.isLoggedIn"
+          @click="logout"
+          href="#"
+          class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+        >
+          {{ this.language.logout }}
+        </a>
+        <a
+          v-else
+          @click="this.$router.push(`/login`)"
+          href="#"
+          class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+        >
+          {{ this.language.login }}
+        </a>
+        <a
+          v-if="!this.$store.state.user.isLoggedIn"
+          @click="this.$router.push(`/register`)"
+          href="#"
+          class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+        >
+          {{ this.language.register }}
+        </a>
+        <a
+          v-if="this.$store.state.config.debug"
+          @click="this.$router.push(`/debug`)"
+          href="#"
+          class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+        >
+          {{ this.language.debug }}
+        </a>
+        <a
+          v-if="this.$store.state.user.isLoggedIn"
+          @click="this.$router.push(`/account`)"
+          href="#"
+          class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+          >{{ this.language.account }}</a
+        >
       </div>
     </nav>
   </div>
