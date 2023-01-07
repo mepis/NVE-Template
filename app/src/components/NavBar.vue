@@ -1,72 +1,63 @@
 <template>
-  <div class="common-layout">
-    <el-container>
-      <el-header>
-        <nav>
-          <el-menu
-            default-active="1"
-            class="el-menu-demo"
-            mode="horizontal"
-            :ellipsis="false"
+  <div id="navBab">
+    <nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
+      <div class="flex items-center flex-shrink-0 text-white mr-6">
+        <a
+          @click="this.$router.push(`/`)"
+          class="font-semibold text-xl tracking-tight"
+        >
+          {{ this.$store.state.config.appName }}</a
+        >
+      </div>
+      <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div class="text-sm lg:flex-grow">
+          <a
+            v-if="this.$store.state.user.isLoggedIn"
+            @click="logout"
+            href="#"
+            class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
           >
-            <el-menu-item index="0"
-              >{{ this.language.hi }}
-              {{ this.$store.state.user.userName }}!</el-menu-item
-            >
-            <div class="flex-grow" />
-            <el-menu-item index="0">
-              <el-image
-                style="width: 100px; height: 100px"
-                :src="this.$store.state.config.appLogo"
-                :fit="fit"
-              />
-              {{ this.$store.state.config.appName }}</el-menu-item
-            >
-            <div class="flex-grow" />
-            <el-menu-item
-              index="2"
-              @click="this.$router.push(`/`)"
-              class="noStyle"
-              >{{ this.language.home }}</el-menu-item
-            >
-            <el-menu-item
-              v-if="this.$store.state.user.isLoggedIn"
-              index="3"
-              @click="logout"
-              class="noStyle"
-              >{{ this.language.logout }}</el-menu-item
-            >
-            <el-menu-item
-              v-else
-              index="4"
-              @click="this.$router.push(`/login`)"
-              class="noStyle"
-              >{{ this.language.login }}</el-menu-item
-            >
-            <el-menu-item
-              v-if="!this.$store.state.user.isLoggedIn"
-              index="5"
-              @click="this.$router.push(`/register`)"
-              class="noStyle"
-              >{{ this.language.register }}</el-menu-item
-            >
-            <el-menu-item
-              v-if="!this.$store.state.config.debug"
-              index="6"
-              @click="this.$router.push(`/debug`)"
-              class="noStyle"
-              >{{ this.language.debug }}</el-menu-item
-            >
-            <el-menu-item
-              index="7"
-              @click="this.$router.push(`/account`)"
-              class="noStyle"
-              >{{ this.language.account }}</el-menu-item
-            >
-          </el-menu>
-        </nav></el-header
-      >
-    </el-container>
+            {{ this.language.logout }}
+          </a>
+          <a
+            v-else
+            @click="this.$router.push(`/login`)"
+            href="#"
+            class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+          >
+            {{ this.language.login }}
+          </a>
+          <a
+            v-if="!this.$store.state.user.isLoggedIn"
+            @click="this.$router.push(`/register`)"
+            href="#"
+            class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+          >
+            {{ this.language.register }}
+          </a>
+          <a
+            v-if="this.$store.state.config.debug"
+            @click="this.$router.push(`/debug`)"
+            href="#"
+            class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+          >
+            {{ this.language.debug }}
+          </a>
+        </div>
+        <div>
+          <span class="text-white mr-6">
+            {{ this.language.hi }}
+            {{ this.$store.state.user.userName }}!
+          </span>
+          <a
+            @click="this.$router.push(`/account`)"
+            href="#"
+            class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-white mt-4 lg:mt-0"
+            >{{ this.language.account }}</a
+          >
+        </div>
+      </div>
+    </nav>
   </div>
 </template>
 
@@ -112,17 +103,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.flex-grow {
-  flex-grow: 1;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<style scoped></style>
